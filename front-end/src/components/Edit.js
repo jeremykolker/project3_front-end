@@ -5,6 +5,7 @@ const Edit = (props) => {
 
   const handleChange = (event) => {
     setMovie({ ...movie, [event.target.name]: event.target.value });
+    console.log(movie)
   };
 
   const handleSubmit = (event) => {
