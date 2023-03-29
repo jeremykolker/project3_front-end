@@ -3,6 +3,11 @@ import './App.css';
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+//COMPONENTS
+import Movie from './components/Movie';
+import Add from './components/Add';
+import Edit from './components/Edit';
+
 
 const App = () => {
   //STATES
@@ -31,18 +36,20 @@ const App = () => {
 
   //UPDATE
   const handleEdit = (data) => {
-    axios.put('http://localhost:3000/movies' + data._id, data)
+    axios.put('http://localhost:3000/movies/' + data._id, data)
     .then((response) => {
-      let newMovies = [...movies, response.data]
+      let newMovies = movies.map((movie) => {
+        return movie._id !== data._id ? movie : data
+      })
       setMovies(newMovies)
     })
   }
 
   //DELETE
   const handleDelete = (deletedMovie) => {
-    axios.delete('http://localhost:3000/movies' + deletedMovie._id)
+    axios.delete('http://localhost:3000/movies/' + deletedMovie._id)
     .then((response) => {
-      let newMovies = movies.fileter((movies) => {
+      let newMovies = movies.filter((movies) => {
         return movies._id !== deletedMovie._id
       })
       setMovies(newMovies)
@@ -52,7 +59,7 @@ const App = () => {
   //USE EFFECT
   useEffect(() => {
     getMovies()
-  })
+  }, [])
 
   return (
     <>
@@ -61,7 +68,7 @@ const App = () => {
 
     <Add handleCreate={handleCreate} />
 
-    {animals.map((animal) => {
+    {movies.map((movie) => {
       return (
         <>
         <Movie movie={movie} />

@@ -1,38 +1,110 @@
-.App {
+body {
   text-align: center;
+  background-color: #2C2D2D;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin: 2rem 0;
+  text-shadow: 2px 2px #B72025;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.card {
+  display: inline-block;
+  margin: 2rem;
+  padding: 1.5rem;
+  border: 3px solid #B72025;
+  width: 250px;
+  height: 350px;
+  text-align: center;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  background-color: #1E1E1E;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  border: 3px solid #fff;
+  transform: translateY(-5px);
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px #B72025;
+}
+
+.card p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.card button {
+  border: none;
+  background-color: #B72025;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.card button:hover {
+  background-color: #fff;
+  color: #B72025;
+  border: 2px solid #B72025;
+}
+
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 2rem;
 }
 
-.App-link {
-  color: #61dafb;
+.form label {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.form button {
+  border: none;
+  background-color: #B72025;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.form button:hover {
+  background-color: #fff;
+  color: #B72025;
+  border: 2px solid #B72025;
 }
