@@ -19,6 +19,7 @@ const Add = (props) => {
   };
 
   return (
+
     <form onSubmit={handleSubmit}>
       <h2>Add New Movie</h2>
       <div>
@@ -31,7 +32,7 @@ const Add = (props) => {
       </div>
       <div>
         <label htmlFor="released">Released:</label>
-        <input type="text" name="released" onChange={handleChange} />
+        <input type="text" name="released" onChange={handleChange} />)
       </div>
       <div>
         <label htmlFor="plot">Plot:</label>
@@ -41,7 +42,8 @@ const Add = (props) => {
         ></textarea>
       </div>
       <button type="submit">Add Movie</button>
-    </form>
+    </form> 
+ 
   );
 };
 

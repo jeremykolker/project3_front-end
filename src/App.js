@@ -8,12 +8,12 @@ import Index from './components/Index';
 
 const App = () => {
   // STATES
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState({});
   const [display, setDisplay] = useState(false)
 
   // CREATE
   const handleCreate = (data) => {
-    axios.post('http://localhost:3000/movies/', data)
+    axios.post('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27', data)
     .then((response) => {
       let newMovies = [...movies, response.data];
       setMovies(newMovies);
@@ -22,7 +22,7 @@ const App = () => {
 
   // READ
   const getMovies = () => {
-    axios.get('http://localhost:3000/movies/')
+    axios.get('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27')
     .then((response) => {
       setMovies(response.data);
       // setDisplay(false)
@@ -33,7 +33,7 @@ const App = () => {
 
   // UPDATE
   const handleEdit = (data) => {
-    axios.put('http://localhost:3000/movies/' + data._id, data)
+    axios.put('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27' + data._id, data)
     .then((response) => {
       let newMovies = movies.map((movie) => {
         return movie._id !== data._id ? movie : data
@@ -45,7 +45,7 @@ const App = () => {
 
   // DELETE
   const handleDelete = (deletedMovie) => {
-    axios.delete('http://localhost:3000/movies/' + deletedMovie._id)
+    axios.delete('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27' + deletedMovie._id)
     .then((response) => {
       let newMovies = movies.filter((movies) => {
         return movies._id !== deletedMovie._id
@@ -54,6 +54,11 @@ const App = () => {
     })
     .catch((error) => console.log(error));
   };
+
+  // DISPLAY TOGGLE
+  const displayToggle = () => {
+    setDisplay(true)
+  }
 
   // USE EFFECT
   useEffect(() => {
@@ -67,12 +72,15 @@ const App = () => {
       {display
   ? (
     <>
+
       <Add handleCreate={handleCreate} />
+
       {movies.map((movie) => {
         return (
           <>
             <Movie movie={movie} />
             <Edit movie={movie} handleEdit={handleEdit} />
+
             <button
               onClick={() => {
                 handleDelete(movie)
@@ -84,8 +92,14 @@ const App = () => {
     </>
   )
   : movies.map((index) => {
-    console.log(index);
-    return <Index index={index} />
+    return ( 
+      <>
+  <button onClick={displayToggle}>SHOW</button>
+
+    <Index index={index} />
+    
+    </>
+    )
   })
 }
         
