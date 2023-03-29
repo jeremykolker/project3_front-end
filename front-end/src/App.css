@@ -80,21 +80,17 @@ h1 {
   margin-top: 2rem;
 }
 
-.form input {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+.App-link {
+  color: #61dafb;
 }
 
-.form button {
-  border: none;
-  background-color: #B72025;
-  color: #fff;
-  font-size: 1.2rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .form button:hover {

@@ -45,4 +45,6 @@ const Add = (props) => {
   );
 };
 
-export default Add;
+
+export default Add
+
