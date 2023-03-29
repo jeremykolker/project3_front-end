@@ -4,10 +4,12 @@ import axios from 'axios';
 import Movie from './components/Movie';
 import Add from './components/Add';
 import Edit from './components/Edit';
+import Index from './components/Index';
 
 const App = () => {
   // STATES
   const [movies, setMovies] = useState([]);
+  const [display, setDisplay] = useState(false)
 
   // CREATE
   const handleCreate = (data) => {
@@ -23,6 +25,7 @@ const App = () => {
     axios.get('http://localhost:3000/movies/')
     .then((response) => {
       setMovies(response.data);
+      // setDisplay(false)
     })
     .catch((error) => console.log(error));
   };
@@ -61,39 +64,31 @@ const App = () => {
     <>
       
 
-    <h1>SLASHR</h1>
-
-    <Add handleCreate={handleCreate} />
-
-    {movies.map((movie) => {
-      return (
-        <>
-        <Movie movie={movie} />
-        <Edit movie={movie} handleEdit={handleEdit} />
-        <button 
-          onClick={() => {
-            handleDelete(movie)
-          }}
-          >DELETE</button>
-
-        </>
-      )
-    })}
-
-
-      {movies.map((movie) => { 
+      {display
+  ? (
+    <>
+      <Add handleCreate={handleCreate} />
+      {movies.map((movie) => {
         return (
-          <div key={movie._id}>
+          <>
             <Movie movie={movie} />
             <Edit movie={movie} handleEdit={handleEdit} />
-            <button 
+            <button
               onClick={() => {
-                handleDelete(movie);
+                handleDelete(movie)
               }}
             >DELETE</button>
-          </div>
-        );
+          </>
+        )
       })}
+    </>
+  )
+  : movies.map((index) => {
+    console.log(index);
+    return <Index index={index} />
+  })
+}
+        
     </>
   );
 };
