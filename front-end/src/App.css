@@ -108,9 +108,3 @@ h1 {
   color: #B72025;
   border: 2px solid #B72025;
 }
-
-.form button:hover {
-  background-color: #fff;
-  color: #B72025;
-  border: 2px solid #B72025;
-}

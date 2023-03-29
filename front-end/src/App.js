@@ -30,42 +30,56 @@ const App = () => {
 
   // UPDATE
   const handleEdit = (data) => {
-    axios.put(`http://localhost:3000/movies/${data._id}`, data)
+    axios.put('http://localhost:3000/movies/' + data._id, data)
     .then((response) => {
       let newMovies = movies.map((movie) => {
-        if (movie._id === response.data._id) {
-          return response.data;
-        } else {
-          return movie;
-        }
-      });
-      setMovies(newMovies);
+        return movie._id !== data._id ? movie : data
+      })
+      setMovies(newMovies)
     })
     .catch((error) => console.log(error));
   };
 
   // DELETE
   const handleDelete = (deletedMovie) => {
-    axios.delete(`http://localhost:3000/movies/${deletedMovie._id}`)
+    axios.delete('http://localhost:3000/movies/' + deletedMovie._id)
     .then((response) => {
-      let newMovies = movies.filter((movie) => {
-        return movie._id !== deletedMovie._id;
-      });
-      setMovies(newMovies);
+      let newMovies = movies.filter((movies) => {
+        return movies._id !== deletedMovie._id
+      })
+      setMovies(newMovies)
     })
     .catch((error) => console.log(error));
   };
 
   // USE EFFECT
   useEffect(() => {
-    getMovies();
-  }, []); 
+    getMovies()
+  }, [])
 
   return (
     <>
       <h1>SLASHR</h1>
 
-      <Add handleCreate={handleCreate} />
+    <h1>SLASHR</h1>
+
+    <Add handleCreate={handleCreate} />
+
+    {movies.map((movie) => {
+      return (
+        <>
+        <Movie movie={movie} />
+        <Edit movie={movie} handleEdit={handleEdit} />
+        <button 
+          onClick={() => {
+            handleDelete(movie)
+          }}
+          >DELETE</button>
+
+        </>
+      )
+    })}
+
 
       {movies.map((movie) => { 
         return (
