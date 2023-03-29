@@ -59,7 +59,7 @@ const App = () => {
 
   return (
     <>
-      <h1>SLASHR</h1>
+      
 
     <h1>SLASHR</h1>
 
