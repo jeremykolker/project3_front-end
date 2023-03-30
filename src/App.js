@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link, animateScroll as scroll } from "react-scroll";
 import axios from "axios";
 import Movie from "./components/Movie";
 import Add from "./components/Add";
 import Edit from "./components/Edit";
+import Pagination from "./components/Pagination";
 import "./App.css";
 
 function App() {
@@ -10,6 +12,8 @@ function App() {
   const [showEdit, setShowEdit] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showAdd, setShowAdd] = useState(false); // add state for showing/hiding Add component
+  const [currentPage, setCurrentPage] = useState(1)
+  const [moviesPerPage] = useState(2)
 
   const handleCreate = (data) => {
     axios
@@ -31,6 +35,7 @@ function App() {
       })
       .catch((error) => console.log(error));
   };
+
 
   const handleEdit = (data) => {
     axios
@@ -57,6 +62,18 @@ function App() {
       .catch((error) => console.log(error));
   };
 
+  //Pagination
+
+  const indexOfLastRecord = currentPage * moviesPerPage
+
+  const indexOfFirstRecord = indexOfLastRecord - moviesPerPage
+
+  const currentMovies = movies.slice(indexOfFirstRecord, indexOfLastRecord)
+
+  const nPages = Math.ceil(movies.length / moviesPerPage)
+
+  //Display Toggles
+
   const toggleEdit = (movie = null) => {
     setShowEdit(!showEdit);
     setSelectedMovie(movie);
@@ -71,40 +88,56 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div className="toggle-menu">
-        <button className="create-nav" onClick={toggleAdd}> ≡ </button>  
-      </div>
-      {showAdd && <Add handleCreate={handleCreate} />} 
-      <h1>SLASHR</h1>
-      <div className="cards-container">
-        {movies.map((movie) => {
-          return (
-            <div className="card" key={movie._id}>
-              <div onClick={() => setSelectedMovie(movie)}>
-                <Movie movie={movie} />
-              </div>
-              {selectedMovie && selectedMovie._id === movie._id && (
-                <div className="edit-form">
-                  <button onClick={() => toggleEdit(movie)}>Edit</button>
-                  {" "}
-                  <button
-                    onClick={() => {
-                      handleDelete(movie);
-                    }}
-                  >
-                    Delete
-                  </button>
-                  {showEdit && selectedMovie && selectedMovie._id === movie._id && (
-                    <Edit movie={selectedMovie} handleEdit={handleEdit} />
-                  )}
+    <>
+      <div>
+        <div className="toggle-menu">
+          <button className="create-nav" onClick={toggleAdd}>
+            {" "}
+            ≡{" "}
+          </button>
+        </div>
+
+        {showAdd && <Add handleCreate={handleCreate} />}
+
+        <h1>SLASHR</h1>
+
+        <div className="cards-container">
+          {movies.map((movie) => {
+            return (
+              <div className="card" key={movie._id}>
+                <div onClick={() => setSelectedMovie(movie)}>
+                  <Movie movie={movie} />
                 </div>
-              )}
-            </div>
-          );
-        })}
+
+                {selectedMovie && selectedMovie._id === movie._id && (
+                  <div className="edit-form">
+                    <button onClick={() => toggleEdit(movie)}>Edit</button>{" "}
+                    <button
+                      onClick={() => {
+                        handleDelete(movie);
+                      }}
+                    >
+                      Delete
+                    </button>
+                    {showEdit &&
+                      selectedMovie &&
+                      selectedMovie._id === movie._id && (
+                        <Edit movie={selectedMovie} handleEdit={handleEdit} />
+                      )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+
+      <Pagination 
+        nPages = {nPages}
+        currentPage = {currentPage}
+        setCurrentPage = {setCurrentPage}
+        />
+    </>
   );
 }
 
