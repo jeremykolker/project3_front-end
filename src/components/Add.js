@@ -1,21 +1,21 @@
 import { useState } from 'react';
 
 const Add = ({ handleCreate }) => {
-  const [image, setImage] = useState('');
+  const [poster_path, setposter_path] = useState('');
   const [title, setTitle] = useState('');
-  const [releaseYear, setReleaseYear] = useState('');
-  const [plotSummary, setPlotSummary] = useState('');
-  const [notableCast, setNotableCast] = useState('');
+  const [release_date, setrelease_date] = useState('');
+  const [overview, setoverview] = useState('');
+  const [vote_average, setvote_average] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newMovie = { image, title, releaseYear, plotSummary, notableCast };
+    const newMovie = { poster_path, title, release_date, overview, vote_average };
     handleCreate(newMovie);
-    setImage('');
+    setposter_path('');
     setTitle('');
-    setReleaseYear('');
-    setPlotSummary('');
-    setNotableCast('');
+    setrelease_date('');
+    setoverview('');
+    setvote_average('');
   }
 
   return (
@@ -23,24 +23,24 @@ const Add = ({ handleCreate }) => {
     <form onSubmit={handleSubmit}>
       <h2>Add New Movie</h2>
       <div>
-        <label>Image:</label>
-        <input type="text" value={image} onChange={(event) => setImage(event.target.value)}/>
+        <label>Poster:</label>
+        <input type="text" value={poster_path} onChange={(event) => setposter_path(event.target.value)}/>
       </div>
       <div>
         <label>Title:</label>
         <input type="text" value={title} onChange={(event) => setTitle(event.target.value)}/>
       </div>
       <div>
-        <label>Release Year:</label>
-        <input type="text" value={releaseYear} onChange={(event) => setReleaseYear(event.target.value)}/>
+        <label>Release Date:</label>
+        <input type="text" value={release_date} onChange={(event) => setrelease_date(event.target.value)}/>
       </div>
       <div>
         <label>Plot Summary:</label>
-        <textarea value={plotSummary} onChange={(event) => setPlotSummary(event.target.value)}></textarea>
+        <textarea value={overview} onChange={(event) => setoverview(event.target.value)}></textarea>
       </div>
       <div>
-        <label>Notable Cast:</label>
-        <input type="text" value={notableCast} onChange={(event) => setNotableCast(event.target.value)}/>
+        <label>Voter Average Score:</label>
+        <input type="number" value={vote_average} onChange={(event) => setvote_average(event.target.value)}/>
       </div>
       <button type="submit">Add Movie</button>
     </form> 

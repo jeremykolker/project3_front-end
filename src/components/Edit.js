@@ -57,7 +57,7 @@ const Edit = (props) => {
           type="text"
           name="notableCast"
           onChange={handleChange}
-          value={movie.cast}
+          value={movie.notableCast}
         />
       </div>
       <input type="submit" />
