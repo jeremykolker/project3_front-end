@@ -84,14 +84,15 @@ function App() {
                 <Movie movie={movie} />
               </div>
               {selectedMovie && selectedMovie._id === movie._id && (
-                <div>
+                <div className="edit-form">
                   <button onClick={() => toggleEdit(movie)}>Edit</button>
+                  {" "}
                   <button
                     onClick={() => {
                       handleDelete(movie);
                     }}
                   >
-                    Remove
+                    Delete
                   </button>
                   {showEdit && selectedMovie && selectedMovie._id === movie._id && (
                     <Edit movie={selectedMovie} handleEdit={handleEdit} />
