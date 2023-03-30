@@ -51,6 +51,15 @@ const Edit = (props) => {
           value={movie.plot}
         ></textarea>
       </div>
+      <div>
+        <label htmlFor="notableCast">Notable Cast:</label>
+        <input
+          type="text"
+          name="notableCast"
+          onChange={handleChange}
+          value={movie.cast}
+        />
+      </div>
       <input type="submit" />
     </form>
   );
