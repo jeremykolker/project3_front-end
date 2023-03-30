@@ -15,7 +15,7 @@ function App() {
     axios
       .post("http://localhost:3000/movies", data)
       .then((response) => {
-        let newMovies = [...movies, response.data];
+        let newMovies = [...movies, response.results];
         setMovies(newMovies);
         setShowAdd(false); // hide Add component after creating a new movie
       })
@@ -24,9 +24,10 @@ function App() {
 
   const getMovies = () => {
     axios
-      .get("http://localhost:3000/movies")
+      .get("https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27")
       .then((response) => {
-        setMovies(response.data);
+        setMovies(response.data.results);
+        console.log(response.data.results);
       })
       .catch((error) => console.log(error));
   };
@@ -72,10 +73,10 @@ function App() {
   return (
     <div>
       <div className="toggle-menu">
-        <button class="create-nav" onClick={toggleAdd}> ≡ </button>  
+        <button className="create-nav" onClick={toggleAdd}> ≡ </button>  
       </div>
       {showAdd && <Add handleCreate={handleCreate} />} 
-      <h1>Slashr</h1>
+      <h1>SLASHR</h1>
       <div className="cards-container">
         {movies.map((movie) => {
           return (
