@@ -13,7 +13,7 @@ const App = () => {
 
   // CREATE
   const handleCreate = (data) => {
-    axios.post('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27', data)
+    axios.post('http://localhost:3000/movies', data)
     .then((response) => {
       let newMovies = [...movies, response.data];
       setMovies(newMovies);
@@ -22,7 +22,7 @@ const App = () => {
 
   // READ
   const getMovies = () => {
-    axios.get('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27')
+    axios.get('http://localhost:3000/movies')
     .then((response) => {
       setMovies(response.data);
       // setDisplay(false)
@@ -33,7 +33,7 @@ const App = () => {
 
   // UPDATE
   const handleEdit = (data) => {
-    axios.put('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27' + data._id, data)
+    axios.put('http://localhost:3000/movies/' + data._id, data)
     .then((response) => {
       let newMovies = movies.map((movie) => {
         return movie._id !== data._id ? movie : data
@@ -45,7 +45,7 @@ const App = () => {
 
   // DELETE
   const handleDelete = (deletedMovie) => {
-    axios.delete('https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27' + deletedMovie._id)
+    axios.delete('http://localhost:3000/movies/' + deletedMovie._id)
     .then((response) => {
       let newMovies = movies.filter((movies) => {
         return movies._id !== deletedMovie._id
