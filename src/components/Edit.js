@@ -17,12 +17,12 @@ const Edit = (props) => {
     <form onSubmit={handleSubmit}>
       <h2>Edit Movie</h2>
       <div>
-        <label htmlFor="poster">Poster:</label>
+        <label htmlFor="poster_path">Poster:</label>
         <input
           type="text"
-          name="poster"
+          name="poster_path"
           onChange={handleChange}
-          value={movie.poster}
+          value={movie.poster_path}
         />
       </div>
       <div>
@@ -35,29 +35,29 @@ const Edit = (props) => {
         />
       </div>
       <div>
-        <label htmlFor="released">Released:</label>
+        <label htmlFor="release_date">Released:</label>
         <input
           type="text"
-          name="released"
+          name="release_date"
           onChange={handleChange}
-          value={movie.released}
+          value={movie.release_date}
         />
       </div>
       <div>
-        <label htmlFor="plot">Plot:</label>
+        <label htmlFor="overview">Overview:</label>
         <textarea
-          name="plot"
+          name="overview"
           onChange={handleChange}
-          value={movie.plot}
+          value={movie.overview}
         ></textarea>
       </div>
       <div>
-        <label htmlFor="notableCast">Notable Cast:</label>
+        <label htmlFor="vote_average">Score:</label>
         <input
-          type="text"
-          name="notableCast"
+          type="number"
+          name="vote_average"
           onChange={handleChange}
-          value={movie.cast}
+          value={movie.vote_average}
         />
       </div>
       <input type="submit" />
