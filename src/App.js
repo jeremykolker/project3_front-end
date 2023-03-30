@@ -32,6 +32,8 @@ function App() {
       .catch((error) => console.log(error));
   };
 
+ 
+
   const handleEdit = (data) => {
     axios
       .put("http://localhost:3000/movies/" + data._id, data)
