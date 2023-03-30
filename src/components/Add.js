@@ -1,45 +1,46 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState } from 'react';
 
-const Add = (props) => {
-  const [movie, setMovie] = useState({
-    poster: "",
-    released: "",
-    title: "",
-    plot: "",
-  });
-
-  const handleChange = (event) => {
-    setMovie({ ...movie, [event.target.name]: event.target.value });
-  };
+const Add = ({ handleCreate }) => {
+  const [image, setImage] = useState('');
+  const [title, setTitle] = useState('');
+  const [releaseYear, setReleaseYear] = useState('');
+  const [plotSummary, setPlotSummary] = useState('');
+  const [notableCast, setNotableCast] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.handleCreate(movie);
-  };
+    const newMovie = { image, title, releaseYear, plotSummary, notableCast };
+    handleCreate(newMovie);
+    setImage('');
+    setTitle('');
+    setReleaseYear('');
+    setPlotSummary('');
+    setNotableCast('');
+  }
 
   return (
 
     <form onSubmit={handleSubmit}>
       <h2>Add New Movie</h2>
       <div>
-        <label htmlFor="poster">Poster:</label>
-        <input type="text" name="poster" onChange={handleChange} />
+        <label>Image:</label>
+        <input type="text" value={image} onChange={(event) => setImage(event.target.value)}/>
       </div>
       <div>
-        <label htmlFor="title">Title:</label>
-        <input type="text" name="title" onChange={handleChange} />
+        <label>Title:</label>
+        <input type="text" value={title} onChange={(event) => setTitle(event.target.value)}/>
       </div>
       <div>
-        <label htmlFor="released">Released:</label>
-        <input type="text" name="released" onChange={handleChange} />)
+        <label>Release Year:</label>
+        <input type="text" value={releaseYear} onChange={(event) => setReleaseYear(event.target.value)}/>
       </div>
       <div>
-        <label htmlFor="plot">Plot:</label>
-        <textarea
-          name="plot"
-          onChange={handleChange}
-        ></textarea>
+        <label>Plot Summary:</label>
+        <textarea value={plotSummary} onChange={(event) => setPlotSummary(event.target.value)}></textarea>
+      </div>
+      <div>
+        <label>Notable Cast:</label>
+        <input type="text" value={notableCast} onChange={(event) => setNotableCast(event.target.value)}/>
       </div>
       <button type="submit">Add Movie</button>
     </form> 
