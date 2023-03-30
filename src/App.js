@@ -1,96 +1,111 @@
-import './App.css';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Movie from './components/Movie';
-import Add from './components/Add';
-import Edit from './components/Edit';
-import Index from './components/Index';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Movie from "./components/Movie";
+import Add from "./components/Add";
+import Edit from "./components/Edit";
+import "./App.css";
 
-const App = () => {
-  // STATES
+function App() {
   const [movies, setMovies] = useState([]);
-  const [display, setDisplay] = useState(false)
+  const [showEdit, setShowEdit] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [showAdd, setShowAdd] = useState(false); // add state for showing/hiding Add component
 
-  // CREATE
   const handleCreate = (data) => {
-    axios.post('http://localhost:3000/movies/', data)
-    .then((response) => {
-      let newMovies = [...movies, response.data];
-      setMovies(newMovies);
-    });
+    axios
+      .post("http://localhost:3000/movies", data)
+      .then((response) => {
+        let newMovies = [...movies, response.data];
+        setMovies(newMovies);
+        setShowAdd(false); // hide Add component after creating a new movie
+      })
+      .catch((error) => console.log(error));
   };
 
-  // READ
   const getMovies = () => {
-    axios.get('http://localhost:3000/movies/')
-    .then((response) => {
-      setMovies(response.data);
-      // setDisplay(false)
-    })
-    .catch((error) => console.log(error));
+    axios
+      .get("http://localhost:3000/movies")
+      .then((response) => {
+        setMovies(response.data);
+      })
+      .catch((error) => console.log(error));
   };
-  
 
-  // UPDATE
   const handleEdit = (data) => {
-    axios.put('http://localhost:3000/movies/' + data._id, data)
-    .then((response) => {
-      let newMovies = movies.map((movie) => {
-        return movie._id !== data._id ? movie : data
+    axios
+      .put("http://localhost:3000/movies/" + data._id, data)
+      .then((response) => {
+        let newMovies = movies.map((movie) => {
+          return movie._id !== data._id ? movie : data;
+        });
+        setMovies(newMovies);
+        toggleEdit();
       })
-      setMovies(newMovies)
-    })
-    .catch((error) => console.log(error));
+      .catch((error) => console.log(error));
   };
 
-  // DELETE
   const handleDelete = (deletedMovie) => {
-    axios.delete('http://localhost:3000/movies/' + deletedMovie._id)
-    .then((response) => {
-      let newMovies = movies.filter((movies) => {
-        return movies._id !== deletedMovie._id
+    axios
+      .delete("http://localhost:3000/movies/" + deletedMovie._id)
+      .then((response) => {
+        let newMovies = movies.filter((movie) => {
+          return movie._id !== deletedMovie._id;
+        });
+        setMovies(newMovies);
       })
-      setMovies(newMovies)
-    })
-    .catch((error) => console.log(error));
+      .catch((error) => console.log(error));
   };
 
-  // USE EFFECT
+  const toggleEdit = (movie = null) => {
+    setShowEdit(!showEdit);
+    setSelectedMovie(movie);
+  };
+
+  const toggleAdd = () => {
+    setShowAdd(!showAdd); // toggle showing/hiding Add component
+  }
+
   useEffect(() => {
-    getMovies()
-  }, [])
+    getMovies();
+  }, []);
 
   return (
-    <>
-      
-
-      {display
-  ? (
-    <>
-      <Add handleCreate={handleCreate} />
-      {movies.map((movie) => {
-        return (
-          <>
-            <Movie movie={movie} />
-            <Edit movie={movie} handleEdit={handleEdit} />
-            <button
-              onClick={() => {
-                handleDelete(movie)
-              }}
-            >DELETE</button>
-          </>
-        )
-      })}
-    </>
-  )
-  : movies.map((index) => {
-    console.log(index);
-    return <Index index={index} />
-  })
-}
-        
-    </>
+    <div>
+      <div className="toggle-menu">
+        <button class="create-nav" onClick={toggleAdd}> ≡ </button>  
+      </div>
+      {showAdd && <Add handleCreate={handleCreate} />} 
+      <h1>Slashr</h1>
+      <div className="cards-container">
+        {movies.map((movie) => {
+          return (
+            <div className="card" key={movie._id}>
+              <div onClick={() => setSelectedMovie(movie)}>
+                <Movie movie={movie} />
+              </div>
+              {selectedMovie && selectedMovie._id === movie._id && (
+                <div>
+                  <button onClick={() => toggleEdit(movie)}>Edit</button>
+                  <button
+                    onClick={() => {
+                      handleDelete(movie);
+                    }}
+                  >
+                    Remove
+                  </button>
+                  {showEdit && selectedMovie && selectedMovie._id === movie._id && (
+                    <Edit movie={selectedMovie} handleEdit={handleEdit} />
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
-};
+}
+
+
 
 export default App;
