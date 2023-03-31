@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link, animateScroll as scroll } from "react-scroll";
 import axios from "axios";
 import Movie from "./components/Movie";
 import Add from "./components/Add";
@@ -13,7 +12,8 @@ function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showAdd, setShowAdd] = useState(false); // add state for showing/hiding Add component
   const [currentPage, setCurrentPage] = useState(1)
-  const [moviesPerPage] = useState(2)
+  const [moviesPerPage] = useState(5)
+  const [prevDisplay, setPrevDisplay] = useState(false)
 
   const handleCreate = (data) => {
     axios
@@ -28,13 +28,14 @@ function App() {
 
   const getMovies = () => {
     axios
-      .get("https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27")
+      .get(`https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27&page=${currentPage}`)
       .then((response) => {
         setMovies(response.data.results);
         console.log(response.data.results);
       })
       .catch((error) => console.log(error));
   };
+
 
 
   const handleEdit = (data) => {
@@ -71,6 +72,24 @@ function App() {
   const currentMovies = movies.slice(indexOfFirstRecord, indexOfLastRecord)
 
   const nPages = Math.ceil(movies.length / moviesPerPage)
+
+  const prevPage = () => {
+    let prev = (currentPage - 1)
+    if (prev == 0){
+      setPrevDisplay(false)
+    } else {
+      setPrevDisplay(true)
+    setCurrentPage(prev)
+    getMovies()
+  }
+}
+
+  const nextPage = () => {
+    let next = (currentPage + 1)
+    setCurrentPage(next)
+    setPrevDisplay(true)
+    getMovies()
+  }
 
   //Display Toggles
 
@@ -132,11 +151,18 @@ function App() {
         </div>
       </div>
 
-      <Pagination 
+          {prevDisplay
+      ?<button onClick={prevPage}>Prev</button>
+      : null}
+          <button onClick={nextPage}>Next</button>
+
+      {/* <Movie movie={currentMovies} /> */}
+      {/* <Pagination 
         nPages = {nPages}
         currentPage = {currentPage}
         setCurrentPage = {setCurrentPage}
-        />
+        /> */}
+
     </>
   );
 }
