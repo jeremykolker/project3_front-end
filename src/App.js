@@ -19,7 +19,7 @@ function App() {
     axios
       .post("http://localhost:3000/movies", data)
       .then((response) => {
-        let newMovies = [...movies, response.results];
+        let newMovies = [...movies, response.data];
         setMovies(newMovies);
         setShowAdd(false); // hide Add component after creating a new movie
       })
