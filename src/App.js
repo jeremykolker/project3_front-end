@@ -1,146 +1,59 @@
-import React, { useState, useEffect } from "react";
-import { Link, animateScroll as scroll } from "react-scroll";
-import axios from "axios";
-import Movie from "./components/Movie";
-import Add from "./components/Add";
-import Edit from "./components/Edit";
-import Pagination from "./components/Pagination";
-import "./App.css";
+import React, { useState, useRef, useCallback } from 'react'
+import useMovieSearch from './components/useMovieSearch'
+import Movie from './components/Movie'
+import "./App.css"
 
-function App() {
-  const [movies, setMovies] = useState([]);
-  const [showEdit, setShowEdit] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [showAdd, setShowAdd] = useState(false); // add state for showing/hiding Add component
-  const [currentPage, setCurrentPage] = useState(1)
-  const [moviesPerPage] = useState(2)
+export default function App() {
+  const [query, setQuery] = useState('')
+  const [pageNumber, setPageNumber] = useState(1)
 
-  const handleCreate = (data) => {
-    axios
-      .post("http://localhost:3000/movies", data)
-      .then((response) => {
-        let newMovies = [...movies, response.results];
-        setMovies(newMovies);
-        setShowAdd(false); // hide Add component after creating a new movie
-      })
-      .catch((error) => console.log(error));
-  };
+  const {
+    movies,
+    hasMore,
+    loading,
+    error
+  } = useMovieSearch(query, pageNumber)
 
-  const getMovies = () => {
-    axios
-      .get("https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27")
-      .then((response) => {
-        setMovies(response.data.results);
-        console.log(response.data.results);
-      })
-      .catch((error) => console.log(error));
-  };
+  const observer = useRef()
+  const lastMovieElementRef = useCallback(node => {
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        // console.log('Visible');
+        setPageNumber(prevPageNumber => prevPageNumber + 1)
+      }
+    })
+    if (node) observer.current.observe(node)
+  }, [loading, hasMore])
 
-
-  const handleEdit = (data) => {
-    axios
-      .put("http://localhost:3000/movies/" + data._id, data)
-      .then((response) => {
-        let newMovies = movies.map((movie) => {
-          return movie._id !== data._id ? movie : data;
-        });
-        setMovies(newMovies);
-        toggleEdit();
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleDelete = (deletedMovie) => {
-    axios
-      .delete("http://localhost:3000/movies/" + deletedMovie._id)
-      .then((response) => {
-        let newMovies = movies.filter((movie) => {
-          return movie._id !== deletedMovie._id;
-        });
-        setMovies(newMovies);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  //Pagination
-
-  const indexOfLastRecord = currentPage * moviesPerPage
-
-  const indexOfFirstRecord = indexOfLastRecord - moviesPerPage
-
-  const currentMovies = movies.slice(indexOfFirstRecord, indexOfLastRecord)
-
-  const nPages = Math.ceil(movies.length / moviesPerPage)
-
-  //Display Toggles
-
-  const toggleEdit = (movie = null) => {
-    setShowEdit(!showEdit);
-    setSelectedMovie(movie);
-  };
-
-  const toggleAdd = () => {
-    setShowAdd(!showAdd); // toggle showing/hiding Add component
+  function handleSearch(event) {
+    setQuery(event.target.value)
+    setPageNumber(1)
   }
-
-  useEffect(() => {
-    getMovies();
-  }, []);
 
   return (
     <>
-      <div>
-        <div className="toggle-menu">
-          <button className="create-nav" onClick={toggleAdd}>
-            {" "}
-            ≡{" "}
-          </button>
-        </div>
-
-        {showAdd && <Add handleCreate={handleCreate} />}
-
-        <h1>SLASHR</h1>
-
-        <div className="cards-container">
-          {movies.map((movie) => {
-            return (
-              <div className="card" key={movie._id}>
-                <div onClick={() => setSelectedMovie(movie)}>
-                  <Movie movie={movie} />
-                </div>
-
-                {selectedMovie && selectedMovie._id === movie._id && (
-                  <div className="edit-form">
-                    <button onClick={() => toggleEdit(movie)}>Edit</button>{" "}
-                    <button
-                      onClick={() => {
-                        handleDelete(movie);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    {showEdit &&
-                      selectedMovie &&
-                      selectedMovie._id === movie._id && (
-                        <Edit movie={selectedMovie} handleEdit={handleEdit} />
-                      )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <Pagination 
-        nPages = {nPages}
-        currentPage = {currentPage}
-        setCurrentPage = {setCurrentPage}
-        />
+      <input type="text" value={query} onChange={handleSearch}></input>
+      {movies.map((movie, index) => {
+        if (movies.length === index + 1) {
+          return (
+            <>
+          <div ref={lastMovieElementRef} key={movie}>{movie}</div>
+          {/* <Movie movie={movie} /> */}
+          </>
+          )
+        } else {
+          return (
+            <>
+          <div key={movie}>{movie}</div>
+          {/* <Movie movie={movie} /> */}
+          </>
+          )
+        }
+      })}
+      <div>{loading && 'Loading...'}</div>
+      <div>{error && 'Error'}</div>
     </>
-  );
+  )
 }
-
-
-
-export default App;
