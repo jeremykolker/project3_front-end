@@ -5,22 +5,55 @@ body {
   color: #fff;
 }
 
-.toggle-menu {
+
+
+.dropdown-container {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   padding: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.dropdown-button{
+  transition: all 0.2s ease-in-out;
+  font-size: x-large;
+  width: 30px;
+  height: 30px; 
+  cursor: pointer;
+}
+.dropdown-menu {
+  background-color: #1E1E1E;
+  border-style: solid;
+  width: 120px;
+  border-color: black;
+  margin-top: 20px;
+  margin-right: 10px;
+  position: fixed;
+  z-index: 999; 
+  right: 0;
+  padding: 10px;
+  transition: all 0.2s ease-in-out;
+ 
+}
+.toggle-menu {
+  border: 3px solid #B72025;
+  position: absolute;
+  left: 0;
+  padding: 20px;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease-in-out;
 }
 
 .watchlist{
   top: 0;
+  left: 0;
   position: fixed;
   z-index: 999; 
   list-style: none;
   border: 3px solid #B72025;
-  min-width: 300px;
+  min-width: 275px;
   min-height: 250px;
-  text-align: center;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
   background-color: #1E1E1E;
   transition: all 0.2s ease-in-out;
@@ -28,27 +61,38 @@ body {
   resize: both; 
   max-width: 80%; 
   max-height: 80%; 
+  text-align: left;
 }
 
 
 .watchlist-button{
+  margin-top: 10px;
   border: none;
   background-color: #B72025;
   color: #fff;
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
- 
 }
+
+.watchlist-h2{
+  text-align: center;
+}
+
 .sort-buttons{
   border: none;
   background-color: #B72025;
   color: #fff;
   font-size: 1.2rem;
   padding: 0.5rem;
-  cursor: pointer;
+ 
   transition: all 0.2s ease-in-out;
+}
+
+.delete{
+  color: #fff;
+  margin-left: 10px;
+  background-color: #B72025;
 }
 
 .button1:hover {
@@ -59,8 +103,8 @@ body {
 }
 h1 {
   text-align: center;
-  font-size: 3rem;
-  margin: 2rem 0;
+  font-size: 5rem;
+  margin: 1rem 0;
   color:  #B72025;
   text-shadow: 2px 2px #fff;
 }
@@ -69,8 +113,6 @@ h2{
 color:  #fff;
 text-shadow: 2px 2px #B72025;
 }
-
-
 
 .cards-container {
   display: flex;
