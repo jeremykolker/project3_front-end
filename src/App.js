@@ -80,6 +80,7 @@ export default function App() {
     }
   };
 
+
   const addToWatchlist = async (movie) => {
     setWatchlist([...watchlist, movie.title]);
     try {
@@ -89,6 +90,7 @@ export default function App() {
       console.log(error);
     }
   };
+
 
   const deleteFromWatchlist = (index) => {
     const updatedWatchlist = [...watchlist];
@@ -118,6 +120,7 @@ export default function App() {
           Search
         </button>
       </div>
+
 
       <div className="watchlist-button">
         <button className="button1" onClick={toggleWatchlist}>
@@ -149,6 +152,7 @@ export default function App() {
         <button onClick={() => handleSort("title")}>Sort by Title</button>
         <button onClick={() => handleSort("rating")}>Sort by Score</button>
       </div>
+
 
       {/* <input type="text" value={query} onChange={handleSearch}></input> */}
       <div className="cards-container">
