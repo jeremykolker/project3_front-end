@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import useMovieSearch from './components/useMovieSearch'
 import axios from 'axios'
 import Movie from './components/Movie'
@@ -13,9 +13,9 @@ export default function App() {
   const [sortOrder, setSortOrder] = useState("");
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(100);
-  const [prevDisplay, setPrevDisplay] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  // const [moviesPerPage] = useState(100);
+  // const [prevDisplay, setPrevDisplay] = useState(false);
 
   const {
     films,
@@ -23,6 +23,16 @@ export default function App() {
     loading,
     error
   } = useMovieSearch(query, pageNumber)
+
+  // const getMovies = () => {
+  //   axios
+  //     .get(`https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27&page=${currentPage}`)
+  //     .then((response) => {
+  //       setMovies(response.data.results);
+  //       console.log(response.data.results);
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   const searchMovies = () => {
     axios
@@ -74,7 +84,7 @@ export default function App() {
     setIsWatchlistOpen(!isWatchlistOpen);
     if (!isWatchlistOpen) {
       axios
-        .get('/watchlist')
+        .get('/movies')
         .then(response => setWatchlist(response.data))
         .catch(error => console.log(error));
     }
@@ -84,7 +94,7 @@ export default function App() {
   const addToWatchlist = async (movie) => {
     setWatchlist([...watchlist, movie.title]);
     try {
-      await axios.post('/watchlist', { movie });
+      await axios.post('/movies', { movie });
       toggleWatchlist();
     } catch (error) {
       console.log(error);
@@ -99,10 +109,14 @@ export default function App() {
   };
 
 
-  function handleSearch(event) {
-    setQuery(event.target.value)
-    setPageNumber(1)
-  }
+  // function handleSearch(event) {
+  //   setQuery(event.target.value)
+  //   setPageNumber(1)
+  // }
+
+  // useEffect(() => {
+  //   getMovies();
+  // }, [currentPage]);
 
   return (
     <>
