@@ -61,7 +61,7 @@ export default function App() {
       sortedMovies.sort((a, b) => {
         return a.title.localeCompare(b.title);
       });
-    } else if (order === "review") {
+    } else if (order === "vote_average") {
       sortedMovies.sort((a, b) => {
         return b.vote_average - a.vote_average;
       });
