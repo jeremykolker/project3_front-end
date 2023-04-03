@@ -34,20 +34,18 @@ export default function App() {
 
   return (
     <>
-      <input type="text" value={query} onChange={handleSearch}></input>
+      {/* <input type="text" value={query} onChange={handleSearch}></input> */}
       {movies.map((movie, index) => {
         if (movies.length === index + 1) {
           return (
             <>
           <div ref={lastMovieElementRef} key={movie}>{movie}</div>
-          {/* <Movie movie={movie} /> */}
           </>
           )
         } else {
           return (
             <>
           <div key={movie}>{movie}</div>
-          {/* <Movie movie={movie} /> */}
           </>
           )
         }
