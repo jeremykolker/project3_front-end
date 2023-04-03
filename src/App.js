@@ -7,17 +7,21 @@ import "./App.css";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [moviesPerPage] = useState(100);
+  const [prevDisplay, setPrevDisplay] = useState(false);
   const [watchlist, setWatchlist] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
   const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(100);
-  const [prevDisplay, setPrevDisplay] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  
 
   const getMovies = () => {
     axios
-      .get(`https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27&page=${currentPage}`)
+      .get(
+        `https://api.themoviedb.org/3/discover/movie?api_key=7ad3eb0336e7d980b07099008b38c2ce&with_genres=27&page=${currentPage}`
+      )
       .then((response) => {
         setMovies(response.data.results);
         console.log(response.data.results);
@@ -60,30 +64,28 @@ function App() {
   
 
   //Pagination
-  const indexOfLastMovie = currentPage * moviesPerPage;
-  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+  const indexOfLastMovies = currentPage * moviesPerPage;
+  const indexOfFirstMovies = indexOfLastMovies- moviesPerPage;
+  const currentMovies = movies.slice(indexOfFirstMovies, indexOfLastMovies);
   const nPages = Math.ceil(movies.length / moviesPerPage);
 
- 
   const prevPage = () => {
     let prev = currentPage - 1;
-    if (prev > 0) {
-      setCurrentPage(prev);
-      setPrevDisplay(true);
-      getMovies(prev);
-    } else {
+    if (prev < 2) {
       setPrevDisplay(false);
+    } else {
+      setPrevDisplay(true);
     }
+    setCurrentPage(prev);
+    getMovies();
   };
-  
+
   const nextPage = () => {
-    let next = currentPage + 1;
-    setCurrentPage(next);
-    setPrevDisplay(true);
-    getMovies(next);
-  };
-  
+    let next = (currentPage + 1)
+    setCurrentPage(next)
+    setPrevDisplay(true)
+    getMovies()
+  }
 
   const toggleWatchlist = () => {
     setIsWatchlistOpen(!isWatchlistOpen);
@@ -111,17 +113,19 @@ function App() {
     setWatchlist(updatedWatchlist);
   };
 
+  
+
   useEffect(() => {
     getMovies();
   }, [currentPage]);
 
-  return (
-    <>
+ return (
+  <>
     <div>
       <h1>SLASHR</h1>
   
       <div className="search-container">
-        <input
+        <input classname="search"
           type="text"
           placeholder="Search for movies..."
           value={searchQuery}
@@ -131,24 +135,18 @@ function App() {
           Search
         </button>
       </div>
-  
-      <div className="watchlist-button">
-        <button className="button1" onClick={toggleWatchlist}>
-          Watchlist
-        </button>
-      </div>
-  
-      <div
-        className="watchlist"
-        style={{ display: isWatchlistOpen ? "block" : "none" }}
-      >
-        <h2>Watchlist</h2>
+      <div className="dropdown-container">
+
+      <div className="watchlist"
+        style={{ display: isWatchlistOpen ? "block" : "none" }}>
+        <h2 className="watchlist-h2">Watchlist</h2>
+
         {watchlist.length > 0 ? (
           <ul>
             {watchlist.map((movie, index) => (
               <li key={index}>
                 {movie}
-                <button onClick={() => deleteFromWatchlist(index)}>Delete</button>
+                <button className="delete" onClick={() => deleteFromWatchlist(index)}>Delete</button>
               </li>
             ))}
           </ul>
@@ -156,30 +154,47 @@ function App() {
           <p>Your watchlist is empty.</p>
         )}
       </div>
-  
-      <div className="sort-buttons">
-        <button onClick={() => handleSort("release_date")}>Sort by Release Date</button>
-        <button onClick={() => handleSort("title")}>Sort by Title</button>
-        <button onClick={() => handleSort("rating")}>Sort by Review</button>
-      </div>
-  
+   
+      <button className="dropdown-button" onClick={() => setIsOpen(!isOpen)}>
+      ≡
+      </button>
+      {isOpen && (
+        <div className="dropdown-menu">
+          <div className="watchlist-button">
+            <button className="button1" onClick={toggleWatchlist}>
+              Watchlist
+            </button>
+          </div>
+          <div className="sort-buttons">
+            <button onClick={() => handleSort("release_date")}>
+              Sort by Date
+            </button>
+            <button onClick={() => handleSort("title")}>Sort by Title</button>
+            <button onClick={() => handleSort("review")}>Sort by Score</button>
+          </div>
+          
+        </div>
+      )}
+    </div>
+
       <div className="cards-container">
-        {currentMovies.map((movie) => {
+        {movies.map((movie) => {
           return (
             <div className="card" key={movie.id}>
               <Movie movie={movie} />
-              <button onClick={() => addToWatchlist(movie)}>
-                Add to Watchlist
-              </button>
+              <button onClick={() => addToWatchlist(movie)}>Add to Watchlist</button>
             </div>
           );
         })}
       </div>
     </div>
-  
+
     {prevDisplay ? <button onClick={prevPage}>Prev</button> : null}
     <button onClick={nextPage}>Next</button>
+
   </>
-  )  
-}  
-  export default App
+
+);
+
+}   
+export default App
