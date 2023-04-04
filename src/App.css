@@ -1,5 +1,4 @@
 body {
-  
   text-align: center;
   background-color: #2C2D2D;
   font-family: 'Montserrat', sans-serif;
@@ -17,6 +16,7 @@ body {
 }
 
 .dropdown-button{
+  background-color: #B72025;
   transition: all 0.2s ease-in-out;
   font-size: x-large;
   width: 30px;
@@ -68,7 +68,7 @@ body {
 
 
 .watchlist-button{
- 
+  background-color: #B72025;
   margin-top: 10px;
   border: none;
   color: #fff;
@@ -97,12 +97,28 @@ body {
   background-color: #B72025;
 }
 
+.button1{
+  background-color: #1E1E1E;
+  color: #B72025;
+  padding: 10px;
+}
+.button2{
+  background-color: #1E1E1E;
+  color: #B72025;
+}
+.button3{
+  background-color: #1E1E1E;
+  color: #B72025;
+}
+.button4{
+  background-color: #1E1E1E;
+  color: #B72025;
+}
 .button1:hover {
   background-color: #fff;
   color: #B72025;
   border: 2px solid #B72025;
   cursor: pointer;
-  
 }
 
 .button2:hover {
@@ -141,14 +157,16 @@ text-shadow: 2px 2px #B72025;
 
 .search{
   padding: 6px;
-  height: 10px;
+  height: 20px;
+  background-color: #B72025;
 }
-
 
 .search-btn{
   padding: 6px;
+  color: #fff;
   cursor: pointer;
   margin-left: 5px;
+  background-color: #B72025;
 }
 
 .cards-container {
@@ -270,3 +288,7 @@ text-shadow: 2px 2px #B72025;
   border: 2px solid #B72025;
 }
 
+.sort-buttons{
+  padding: 10px;
+  margin: 10px
+}

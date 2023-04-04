@@ -126,7 +126,7 @@ function App() {
   
       <div className="search-container">
         <div className="search-field">
-        <input 
+        <input class="search"
           type="text"
           placeholder="Search for movies..."
           value={searchQuery}
