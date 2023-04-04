@@ -1,14 +1,17 @@
 body {
+  
   text-align: center;
   background-color: #2C2D2D;
   font-family: 'Montserrat', sans-serif;
   color: #fff;
+  margin: 20px;
 }
 
 .dropdown-container {
   position: absolute;
   top: 0;
   right: 0;
+  margin-right: 10px;
   padding: 10px;
   transition: all 0.2s ease-in-out;
 }
@@ -21,7 +24,7 @@ body {
   cursor: pointer;
 }
 .dropdown-menu {
-  background-color: #1E1E1E;
+  background-color: #B72025;
   border-style: solid;
   width: 120px;
   border-color: black;
@@ -44,6 +47,7 @@ body {
 }
 
 .watchlist{
+  background-color: #B72025;
   top: 0;
   left: 0;
   position: fixed;
@@ -66,7 +70,6 @@ body {
 .watchlist-button{
   margin-top: 10px;
   border: none;
-  background-color: #B72025;
   color: #fff;
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
@@ -77,15 +80,6 @@ body {
   text-align: center;
 }
 
-.sort-buttons{
-  border: none;
-  background-color: #B72025;
-  color: #fff;
-  font-size: 1.2rem;
-  padding: 0.5rem;
- 
-  transition: all 0.2s ease-in-out;
-}
 
 .delete{
   color: #fff;
@@ -97,8 +91,31 @@ body {
   background-color: #fff;
   color: #B72025;
   border: 2px solid #B72025;
-
+  cursor: pointer;
+  
 }
+
+.button2:hover {
+  background-color: #fff;
+  color: #B72025;
+  border: 2px solid #B72025;
+  cursor: pointer;
+}
+
+.button3:hover {
+  background-color: #fff;
+  color: #B72025;
+  border: 2px solid #B72025;
+  cursor: pointer;
+}
+
+.button4:hover {
+  background-color: #fff;
+  color: #B72025;
+  border: 2px solid #B72025;
+  cursor: pointer;
+}
+
 h1 {
   text-align: center;
   font-size: 5rem;
@@ -110,6 +127,18 @@ h1 {
 h2{
 color:  #fff;
 text-shadow: 2px 2px #B72025;
+}
+
+.search{
+  padding: 6px;
+  height: 10px;
+}
+
+
+.search-btn{
+  padding: 6px;
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 .cards-container {
@@ -207,6 +236,25 @@ text-shadow: 2px 2px #B72025;
 }
 
 .form button:hover {
+  background-color: #fff;
+  color: #B72025;
+  border: 2px solid #B72025;
+}
+
+.prevnext {
+  border: solid;
+  background-color: #B72025;
+  border-color: #2C2D2D;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.prevnext button:hover {
   background-color: #fff;
   color: #B72025;
   border: 2px solid #B72025;

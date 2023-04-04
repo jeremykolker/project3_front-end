@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Movie from "./components/Movie";
-import Pagination from "./components/Pagination";
-import Add from "./components/Add";
+// import Pagination from "./components/Pagination";
+// import Add from "./components/Add";
 import "./App.css";
 
 function App() {
@@ -125,7 +125,8 @@ function App() {
       <h1>SLASHR</h1>
   
       <div className="search-container">
-        <input classname="search"
+        <div className="search-field">
+        <input 
           type="text"
           placeholder="Search for movies..."
           value={searchQuery}
@@ -134,6 +135,7 @@ function App() {
         <button className="search-btn" onClick={searchMovies}>
           Search
         </button>
+        </div>
       </div>
       <div className="dropdown-container">
 
@@ -166,11 +168,11 @@ function App() {
             </button>
           </div>
           <div className="sort-buttons">
-            <button onClick={() => handleSort("release_date")}>
+            <button className="button2" onClick={() => handleSort("release_date")}>
               Sort by Date
             </button>
-            <button onClick={() => handleSort("title")}>Sort by Title</button>
-            <button onClick={() => handleSort("review")}>Sort by Score</button>
+            <button className="button3" onClick={() => handleSort("title")}>Sort by Title</button>
+            <button className="button4"onClick={() => handleSort("review")}>Sort by Score</button>
           </div>
           
         </div>
@@ -189,8 +191,8 @@ function App() {
       </div>
     </div>
 
-    {prevDisplay ? <button onClick={prevPage}>Prev</button> : null}
-    <button onClick={nextPage}>Next</button>
+    {prevDisplay ? <button className="prevnext" onClick={prevPage}>Prev</button> : null}
+    <button className="prevnext" onClick={nextPage}>Next</button>
 
   </>
 
