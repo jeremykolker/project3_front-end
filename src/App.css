@@ -81,6 +81,15 @@ body {
   text-align: center;
 }
 
+.sort-buttons{
+  cursor: pointer;
+  border: none;
+  background-color: #B72025;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
 
 .delete{
   color: #fff;

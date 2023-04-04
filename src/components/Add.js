@@ -19,6 +19,7 @@ const Add = ({ handleCreate }) => {
   }
 
   return (
+
     <form onSubmit={handleSubmit}>
       <h2>Add New Movie</h2>
       <div>
@@ -42,7 +43,8 @@ const Add = ({ handleCreate }) => {
         <input type="number" value={vote_average} onChange={(event) => setvote_average(event.target.value)}/>
       </div>
       <button type="submit">Add Movie</button>
-    </form>
+    </form> 
+ 
   );
 };
 
