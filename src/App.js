@@ -5,6 +5,7 @@ import Movie from "./components/Movie";
 // import Add from "./components/Add";
 import "./App.css";
 
+// USESTATE HOOKS FOR TRACKING MOVIES, PAGES, SEARCH, WATCHLIST, DISPLAYS \\
 function App() {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +18,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   
 
+  // GET TMDB VARIABLE
   const getMovies = () => {
     axios
       .get(
@@ -29,6 +31,7 @@ function App() {
       .catch((error) => console.log(error));
   };
 
+  // SEARCH VARIABLE 
   const searchMovies = () => {
     axios
       .get(
@@ -41,6 +44,7 @@ function App() {
       .catch((error) => console.log(error));
   };
 
+  // SORT BY TMDB DATE, TITLE, REVIEW SCORE \\
   const handleSort = (order) => {
     setSortOrder(order);
     let sortedMovies = [...movies];
@@ -63,7 +67,7 @@ function App() {
   };
   
 
-  //Pagination
+  // PAGINATION
   const indexOfLastMovies = currentPage * moviesPerPage;
   const indexOfFirstMovies = indexOfLastMovies- moviesPerPage;
   const currentMovies = movies.slice(indexOfFirstMovies, indexOfLastMovies);
@@ -87,6 +91,7 @@ function App() {
     getMovies()
   }
 
+  // OPEN CLOSE WATCHLIST \\
   const toggleWatchlist = () => {
     setIsWatchlistOpen(!isWatchlistOpen);
     if (!isWatchlistOpen) {
@@ -97,6 +102,7 @@ function App() {
     }
   };
 
+  // ADD MOVIES TO WATCHLIST \\
   const addToWatchlist = async (movie) => {
     setWatchlist([...watchlist, movie.title]);
     try {
