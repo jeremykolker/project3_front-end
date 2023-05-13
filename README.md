@@ -1,20 +1,31 @@
-STASHR 
+# SLASHR - Front End
 
-a Horror Movie database & watchlist resource by Jeremy Kolker & Brian Forbes
+SLASHR is a web-based app that allows users to log their favorite horror films. The app uses the TMDB (the movie database) API to provide users with information about different horror movies, and allows them to search for specific movies and add them to their watchlist. With SLASHR, horror movie fans can easily keep track of the movies they've watched and discover new ones to add to their list.
 
+## Getting Started
 
-STASHR is a Full-Stack Crud App built using React, MongoDB, Mongo Atlas, and TMDB 3rd party API.
-Users can search, sort, and save their favorite horror movies. Create and edit your own watchlist to watch movies later! 
+To get started, simply visit the following URL in your web browser:
 
+https://agile-meadow-78400.herokuapp.com/
 
-Developers notes on how to use STASHR:
--Clone the repository to your local machine
+## Prerequisites
 
--Navigate to the project directory and run npm install to install dependencies.
+There are no specific prerequisites to run SLASHR, as it is a web-based app. All you need is a web browser and an internet connection to access the app and start logging your favorite horror films.
 
--Sign up for an API key from The Movie Database API.
+## Built With
 
--Create a .env file in the root of the project directory and set the API key as a variable. For example: REACT_APP_API_KEY=your_api_key_here.
+SLASHR was built using the following technologies:
+- JavaScript
+- React
+- Express
+- TMDB (API)
+- GitHub
+- Heroku
 
--Run npm start to start the development server and open the application in your browser at http://localhost:3000.
+## Contributions
 
+SLASHR was developed by Brian Forbes and Jeremy Kolker. Brian acted as the scrum master and was responsible for developing the back-end of the app, including integrating the TMDB API and deploying the app to Heroku. Jeremy led the development of the watchlist and search bar and was involved in the front-end development of the app. They worked collaboratively to bring SLASHR to life.
+
+## License
+
+SLASHR is released under standard open source license.
